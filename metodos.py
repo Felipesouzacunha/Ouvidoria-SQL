@@ -1,12 +1,12 @@
 from operacoesbd import *
 
-def listartudo(conexao):
+def listarTudo(conexao):
     sqlListar = 'select * from manifestacao'
     manifestacoes = listarBancoDados(conexao, sqlListar)
     print()
     return manifestacoes
 
-def listarportipo(conexao, opcaodelistagem):
+def listarPortipo(conexao, opcaodelistagem):
     if opcaodelistagem == 1:
         sqlListar = "select * from manifestacao where tipo = 'Elogio'"
         manifestacoes = listarBancoDados(conexao, sqlListar)
@@ -21,26 +21,26 @@ def listarportipo(conexao, opcaodelistagem):
         sqllistar = "select * from manifestacao where tipo = 'Reclamação'"
         manifestacoes = listarBancoDados(conexao, sqllistar)
         return manifestacoes
-def criarmanifestacao(conexao, autor, titulo, descricao, tipo):
+def criarManifestacao(conexao, autor, titulo, descricao, tipo):
     sqlinserir = 'insert into manifestacao (autor, titulo, descricao, tipo) values (%s, %s, %s, %s)'
     valores = [autor, titulo, descricao, tipo]
     insertNoBancoDados(conexao, sqlinserir, valores)
 
-def contagemdemanifestacoes(conexao):
+def contagemdeManifestacoes(conexao):
     sqlcontagem = 'select count(*) from manifestacao'
     resultado = listarBancoDados(conexao, sqlcontagem)
-    return resultado
+    return resultado[0][0]
 
-def checagemdemanifestacao(conxao, codigo):
+def checagemdeManifestacao(conxao, codigo):
     sqlchecar = 'select count(*) from manifestacao where codigo = ' + codigo
     resultado = listarBancoDados(conxao, sqlchecar)
-    return resultado
-def pesquisaporcondiog(conexao, condigo):
+    return resultado[0][0]
+def pesquisaPorcondiog(conexao, condigo):
     sqllistar = 'select * from manifestacao where codigo = ' + condigo
     manifestacao = listarBancoDados(conexao,sqllistar)
     return manifestacao
 
-def alterarmanifestacao(conexao, codigo, novotitulo, novadescricao):
+def alterarManifestacao(conexao, codigo, novotitulo, novadescricao):
     sqlalterar = 'update manifestacao set titulo = %s, descricao = %s where codigo = %s'
     valores = [novotitulo, novadescricao, codigo]
     atualizarBancoDados(conexao,sqlalterar, valores)

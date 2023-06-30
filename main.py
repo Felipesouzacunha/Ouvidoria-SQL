@@ -14,41 +14,44 @@ while opcao != 8:
     opcao = int(input('Qual a sua opção? '))
 
     if opcao == 1:
-        manifestacoes = listartudo(conexao)
+        manifestacoes = listarTudo(conexao)
         if len(manifestacoes) == 0:
             print('Não há manifestações!')
         else:
             for manifestacao in manifestacoes:
-                print(
-                    f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - Descrição da manifestação: {manifestacao[3]} - Tipo da manifestação: {manifestacao[4]}')
+                print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - '
+                      f'Descrição da manifestação: {manifestacao[3]} - Tipo da manifestação: {manifestacao[4]}')
 
     elif opcao == 2:
         print('Listagem de manifestação por tipo: ')
         opcaodelistagem = int(input('1)Elogios\n2)Sugestão\n3)Reclamações\nEscolha a opção desejada: '))
-        manifestacoes = listarportipo(conexao, opcaodelistagem)
+        manifestacoes = listarPortipo(conexao, opcaodelistagem)
         if opcaodelistagem == 1:
             if len(manifestacoes) > 0:
                 print('Listagem de Elogios: ')
                 for manifestacao in manifestacoes:
-                    print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - Descrição da manifestação: {manifestacao[3]}')
+                    print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - '
+                          f'Descrição da manifestação: {manifestacao[3]}')
             else:
                 print('Não há Elogios!')
 
         elif opcaodelistagem == 2:
-            manifestacoes = listarportipo(conexao, opcaodelistagem)
+            manifestacoes = listarPortipo(conexao, opcaodelistagem)
             if len(manifestacoes) > 0:
                 print('Listagem de Sugestões: ')
                 for manifestacao in manifestacoes:
-                    print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - Descrição da manifestação: {manifestacao[3]}')
+                    print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - '
+                          f'Descrição da manifestação: {manifestacao[3]}')
             else:
                 print('Não há Sugestões!')
 
         elif opcaodelistagem == 3:
-            manifestacoes = listarportipo(conexao, opcaodelistagem)
+            manifestacoes = listarPortipo(conexao, opcaodelistagem)
             if len(manifestacoes) > 0:
                 print('Listagem de Reclamações: ')
                 for manifestacao in manifestacoes:
-                    print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - Descrição da manifestação: {manifestacao[3]}')
+                    print(f'Codigo: {manifestacao[0]} - Nome: {manifestacao[1]} - Titulo: {manifestacao[2]} - '
+                          f'Descrição da manifestação: {manifestacao[3]}')
             else:
                 print('Não há Reclamações! ')
 
@@ -70,41 +73,42 @@ while opcao != 8:
         autor = input('Digite seu nome:')
         titulo = input('Titulo para a sua manifetação: ')
         descricao = input('Descreve aqui a sua manifetação: ')
-        criarmanifestacao(conexao, autor, titulo, descricao, tipo)
+        criarManifestacao(conexao, autor, titulo, descricao, tipo)
         print('Comentario cadastrado com sucesso!')
 
     elif opcao == 4:
         sqlcontagem = 'select count(*) from manifestacao'
-        resultado = contagemdemanifestacoes(conexao)
+        resultado = contagemdeManifestacoes(conexao)
         print('Quantidade de manifestações cadastradas: ')
-        if len(resultado) > 0:
-            print(f'Há {resultado[0][0]} manifestações cadastradas')
+        if resultado > 0:
+            print(f'Há {resultado} manifestações cadastradas')
         else:
             print('Não há manifestações!')
 
     elif opcao == 5:
         codigo = input('Digite o codigo de manifestação que deseja pesquisar: ')
-        manifestacao = pesquisaporcondiog(conexao, codigo)
+        manifestacao = pesquisaPorcondiog(conexao, codigo)
         if len(manifestacao) == 0:
             print('Codigo inválido!')
         else:
             for elementos in manifestacao:
-                print(f'Nome: {elementos[1]} - Titulo: {elementos[2]} - Descrição da manifestação: {elementos[3]} - Tipo da manifestação: {elementos[4]}')
+                print(f'Nome: {elementos[1]} - Titulo: {elementos[2]} - Descrição da manifestação: '
+                      f'{elementos[3]} - Tipo da manifestação: {elementos[4]}')
     elif opcao == 6:
         codigo = input('Digite o codigo de manifestação que deseja alterar: ')
         print()
-        resultado = checagemdemanifestacao(conexao, codigo)
-        if resultado[0][0] == 0:
+        resultado = checagemdeManifestacao(conexao, codigo)
+        if resultado == 0:
             print('Manifetação não existente!')
         else:
             novotitulo = input('Novo titulo: ')
             novadescricao = input('Nova descrição: ')
-            alterarmanifestacao(conexao, codigo, novotitulo, novadescricao)
+            alterarManifestacao(conexao, codigo, novotitulo, novadescricao)
             print('Manifestação atualizada com sucesso! ')
 
     elif opcao == 7:
         codigo = input('Digite o codigo da manifestação que deseja excluir: ')
-        resultado = checagemdemanifestacao(conexao, codigo)
+        resultado = checagemdeManifestacao(conexao, codigo)
         if resultado[0][0] == 0:
             print('Manifestação não existente!')
         else:
